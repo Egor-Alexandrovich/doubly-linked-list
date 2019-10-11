@@ -52,12 +52,26 @@ class LinkedList {
     this.index = index;
     let count = 0;
     this.data = data;
+    this.nodePrev = null;
+    this.node = new Node;
+    this.node.data = this.data;
     this.firstNode = this._head;
     while (count < this.index) {
       this.firstNode = this.firstNode.next;
       count++;
     }
-    this.firstNode.data = this.data;
+    if (this.index === 0) {
+      this._head = this.node;
+      this._tail = this.node;
+    }
+    else {
+      this.nodePrev = this.firstNode.prev;
+      this.firstNode.prev = this.node;
+      this.node.next = this.firstNode;
+      this.node.prev = this.nodePrev;
+      this.nodePrev.next = this.node;
+    }
+    return this;
   }
 
   isEmpty() {
